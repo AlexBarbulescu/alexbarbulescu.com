@@ -21,6 +21,11 @@
           </div>
         </header>
 
+        <div class="case-hero" aria-hidden="true">
+          <img class="case-hero__img" :src="project.src" :alt="project.alt" loading="lazy" />
+          <div class="case-hero__overlay"></div>
+        </div>
+
         <article class="article__content">
           <p class="article__p">{{ project.desc }}</p>
 
