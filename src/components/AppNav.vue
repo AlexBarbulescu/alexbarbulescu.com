@@ -47,7 +47,6 @@ const links = [
   { to: { path: '/', hash: '#experience' }, label: 'Experience' },
   { to: { path: '/', hash: '#process' },    label: 'Process' },
   { to: { path: '/', hash: '#contact' },    label: 'Contact' },
-  { to: '/articles', label: 'Articles' },
 ]
 
 let lastY = 0

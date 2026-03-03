@@ -1,16 +1,12 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
 import HomePage from '../pages/HomePage.vue'
-import ArticlesIndexPage from '../pages/ArticlesIndexPage.vue'
-import ArticlePage from '../pages/ArticlePage.vue'
 import ProjectPage from '../pages/ProjectPage.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     { path: '/', name: 'home', component: HomePage },
-    { path: '/articles', name: 'articles', component: ArticlesIndexPage },
-    { path: '/articles/:slug', name: 'article', component: ArticlePage },
     { path: '/work/:slug', name: 'project', component: ProjectPage },
     { path: '/:pathMatch(.*)*', redirect: '/' },
   ],
