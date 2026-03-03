@@ -4,7 +4,7 @@
       <div class="footer__top">
         <span class="footer__logo">Alex B.</span>
         <nav class="footer__nav">
-          <a v-for="l in links" :key="l.href" :href="l.href">{{ l.label }}</a>
+          <RouterLink v-for="l in links" :key="l.label" :to="l.to">{{ l.label }}</RouterLink>
         </nav>
       </div>
       <div class="footer__bottom">
@@ -17,10 +17,11 @@
 
 <script setup>
 const links = [
-  { href: '#work',       label: 'Work'       },
-  { href: '#about',      label: 'About'      },
-  { href: '#experience', label: 'Experience' },
-  { href: '#process',    label: 'Process'    },
-  { href: '#contact',    label: 'Contact'    },
+  { to: { path: '/', hash: '#work' },       label: 'Work' },
+  { to: { path: '/', hash: '#about' },      label: 'About' },
+  { to: { path: '/', hash: '#experience' }, label: 'Experience' },
+  { to: { path: '/', hash: '#process' },    label: 'Process' },
+  { to: { path: '/', hash: '#contact' },    label: 'Contact' },
+  { to: '/articles', label: 'Articles' },
 ]
 </script>

@@ -8,6 +8,7 @@
         "/^node -v; npm -v; npx -v; where\\.exe node; where\\.exe npm; where\\.exe npx$/": {
             "approve": true,
             "matchCommandLine": true
-        }
+        },
+        "npm install": true
     }
 }

@@ -1,6 +1,7 @@
 export const projects = [
   {
     id: 1,
+    slug: 'fintech-dashboard-redesign',
     cls: 'project--large',
     src: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&q=80',
     alt: 'Fintech Dashboard',
@@ -8,9 +9,21 @@ export const projects = [
     year: '2024',
     title: 'Fintech Dashboard Redesign',
     desc: 'Complete overhaul of a banking platform serving 200K+ users — 40% reduction in task completion time.',
+    caseStudy: [
+      { type: 'p', text: 'Replace this placeholder case study with your real project story. The layout matches the article pages and keeps your site’s typography + dark aesthetic.' },
+      { type: 'h2', text: 'Overview' },
+      { type: 'p', text: 'What the product is, who it’s for, and the context for the redesign.' },
+      { type: 'h2', text: 'Challenge' },
+      { type: 'ul', items: ['What was broken or unclear', 'Key constraints (time, tech, stakeholders)', 'User pain points you observed'] },
+      { type: 'h2', text: 'Approach' },
+      { type: 'ul', items: ['Discovery + audits', 'IA / flows', 'Design system decisions', 'Prototyping + validation'] },
+      { type: 'h2', text: 'Outcome' },
+      { type: 'p', text: 'Summarize results and what you learned.' },
+    ],
   },
   {
     id: 2,
+    slug: 'health-wellness-app',
     cls: '',
     src: 'https://images.unsplash.com/photo-1512428559087-560fa5ceab42?w=800&q=80',
     alt: 'Health App',
@@ -18,9 +31,17 @@ export const projects = [
     year: '2023',
     title: 'Health & Wellness App',
     desc: 'End-to-end design of a health tracking mobile app — 50K+ downloads on launch.',
+    caseStudy: [
+      { type: 'p', text: 'Add your narrative here: product goals, your role, and the decisions that mattered.' },
+      { type: 'h2', text: 'What I built' },
+      { type: 'ul', items: ['Key user flows', 'Core screens', 'Design system components'] },
+      { type: 'h2', text: 'How it performed' },
+      { type: 'p', text: 'Add metrics, feedback, or qualitative results.' },
+    ],
   },
   {
     id: 3,
+    slug: 'project-management-tool',
     cls: '',
     src: 'https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?w=800&q=80',
     alt: 'Project Management SaaS',
@@ -28,9 +49,17 @@ export const projects = [
     year: '2023',
     title: 'Project Management Tool',
     desc: 'Redesigning the UX for a B2B SaaS platform used by 500+ teams worldwide.',
+    caseStudy: [
+      { type: 'p', text: 'Write the story in sections (problem → approach → results). You can keep it concise or expand it later.' },
+      { type: 'h2', text: 'Problem' },
+      { type: 'p', text: 'Describe what users struggled with and why it mattered.' },
+      { type: 'h2', text: 'Solution' },
+      { type: 'ul', items: ['Information hierarchy improvements', 'Workflow simplification', 'Consistency updates'] },
+    ],
   },
   {
     id: 4,
+    slug: 'e-commerce-ux-strategy',
     cls: 'project--wide',
     src: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=1200&q=80',
     alt: 'E-Commerce Platform',
@@ -38,5 +67,16 @@ export const projects = [
     year: '2022',
     title: 'E-Commerce UX Strategy',
     desc: 'Strategic UX overhaul that increased conversion rate by 28% for a leading retailer.',
+    caseStudy: [
+      { type: 'p', text: 'Use this as a scaffold: replace with what you actually did and why.' },
+      { type: 'h2', text: 'Audit' },
+      { type: 'ul', items: ['Funnels + analytics', 'Heuristic review', 'Competitor scan'] },
+      { type: 'h2', text: 'Recommendations' },
+      { type: 'p', text: 'Summarize the strategic changes and the impact they had.' },
+    ],
   },
 ]
+
+export function getProjectBySlug(slug) {
+  return projects.find((p) => p.slug === slug)
+}

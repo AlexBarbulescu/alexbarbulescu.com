@@ -1,10 +1,10 @@
 <template>
   <nav class="nav" :class="{ scrolled }" ref="navEl">
     <div class="nav__inner">
-      <a href="#" class="nav__logo"><span class="nav__logo-text">Alex B.</span></a>
+      <RouterLink to="/" class="nav__logo"><span class="nav__logo-text">Alex B.</span></RouterLink>
 
       <div class="nav__links">
-        <a v-for="l in links" :key="l.href" :href="l.href" class="nav__link">{{ l.label }}</a>
+        <RouterLink v-for="l in links" :key="l.label" :to="l.to" class="nav__link">{{ l.label }}</RouterLink>
       </div>
 
       <div class="nav__right">
@@ -20,8 +20,12 @@
     </div>
 
     <div class="nav__mobile" :class="{ open }">
-      <a v-for="l in links" :key="l.href" :href="l.href" class="nav__mobile-link"
-         @click="open = false">{{ l.label }}</a>
+      <RouterLink
+        v-for="l in links" :key="l.label"
+        :to="l.to"
+        class="nav__mobile-link"
+        @click="open = false"
+      >{{ l.label }}</RouterLink>
     </div>
   </nav>
 </template>
@@ -38,11 +42,12 @@ const scrolled = ref(false)
 const open    = ref(false)
 
 const links = [
-  { href: '#work',       label: 'Work'       },
-  { href: '#about',      label: 'About'      },
-  { href: '#experience', label: 'Experience' },
-  { href: '#process',    label: 'Process'    },
-  { href: '#contact',    label: 'Contact'    },
+  { to: { path: '/', hash: '#work' },       label: 'Work' },
+  { to: { path: '/', hash: '#about' },      label: 'About' },
+  { to: { path: '/', hash: '#experience' }, label: 'Experience' },
+  { to: { path: '/', hash: '#process' },    label: 'Process' },
+  { to: { path: '/', hash: '#contact' },    label: 'Contact' },
+  { to: '/articles', label: 'Articles' },
 ]
 
 let lastY = 0
