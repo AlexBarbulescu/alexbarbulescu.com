@@ -60,10 +60,10 @@ onUnmounted(() => window.removeEventListener('scroll', onScroll))
     box-shadow 0.25s;
 }
 .back-to-top:hover {
-  background: #7c3aed;
-  border-color: #a855f7;
+  background: var(--accent);
+  border-color: var(--accent-light);
   transform: translateY(-4px);
-  box-shadow: 0 8px 24px rgba(124,58,237,0.4);
+  box-shadow: 0 8px 24px var(--accent-glow);
 }
 .back-to-top:active {
   transform: translateY(-1px);

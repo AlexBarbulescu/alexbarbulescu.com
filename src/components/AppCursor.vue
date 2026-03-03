@@ -18,10 +18,18 @@ const MAX_SIZE    = 14   // radius when dot is at distance 0 from mouse
 const MIN_SIZE    = 1.5  // radius floor
 const LIFETIME_MS = 900  // ms until a dot is fully gone
 
-// accent-light: #a855f7 | accent glow: rgba(124,58,237,…)
-const FILL_COLOR  = '#a855f7'
-const GLOW_COLOR  = 'rgba(168,85,247,0.9)'
 const GLOW_BLUR   = 10
+
+function hexToRgba(hex, alpha) {
+  const h = String(hex || '').trim().replace('#', '')
+  const full = h.length === 3 ? h.split('').map((c) => c + c).join('') : h
+  if (full.length !== 6) return null
+  const r = parseInt(full.slice(0, 2), 16)
+  const g = parseInt(full.slice(2, 4), 16)
+  const b = parseInt(full.slice(4, 6), 16)
+  if ([r, g, b].some((n) => Number.isNaN(n))) return null
+  return `rgba(${r},${g},${b},${alpha})`
+}
 
 let mx = 0, my = 0
 let lastSpawnX = 0, lastSpawnY = 0
@@ -32,6 +40,9 @@ let lastInteractive = false
 // Plain JS objects – no DOM pool, no Vue reactivity
 // { x, y, spawnTime }
 let particles = []
+
+let fillColor = '#fb923c'
+let glowColor = 'rgba(251,146,60,0.9)'
 
 let setDotX, setDotY
 
@@ -75,8 +86,8 @@ function tick() {
     ctx.clearRect(0, 0, width, height)
 
     ctx.shadowBlur  = GLOW_BLUR
-    ctx.shadowColor = GLOW_COLOR
-    ctx.fillStyle   = FILL_COLOR
+    ctx.shadowColor = glowColor
+    ctx.fillStyle   = fillColor
 
     // Filter dead particles out while drawing live ones
     const alive = []
@@ -118,6 +129,13 @@ onMounted(() => {
   if (!isPointer) return
 
   ctx = canvasEl.value.getContext('2d')
+
+  // Pull theme colors from CSS variables so cursor matches the site palette
+  const rootStyle = getComputedStyle(document.documentElement)
+  const accentLight = rootStyle.getPropertyValue('--accent-light').trim()
+  fillColor = accentLight || fillColor
+  glowColor = hexToRgba(accentLight, 0.9) || glowColor
+
   resize()
   window.addEventListener('resize', resize)
 
