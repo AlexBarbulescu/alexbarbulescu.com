@@ -1,0 +1,13 @@
+{
+    "builder.serverUrl": "",
+    "builder.command": "",
+    "builder.runDevServer": true,
+    "builder.autoDetectDevServer": true,
+    "builder.launchType": "editor",
+    "chat.tools.terminal.autoApprove": {
+        "/^node -v; npm -v; npx -v; where\\.exe node; where\\.exe npm; where\\.exe npx$/": {
+            "approve": true,
+            "matchCommandLine": true
+        }
+    }
+}
