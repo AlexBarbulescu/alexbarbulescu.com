@@ -16,7 +16,6 @@
 
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue'
-import gsap from 'gsap'
 
 const visible = ref(false)
 
@@ -24,8 +23,7 @@ function onScroll() {
   visible.value = window.scrollY > 500
 }
 function scrollToTop() {
-  gsap.to(window, { scrollTo: 0, duration: 1, ease: 'expo.inOut' })
-  // fallback if ScrollToPlugin not loaded
+  visible.value = false  // hide immediately — prevents re-clicks during smooth scroll
   window.scrollTo({ top: 0, behavior: 'smooth' })
 }
 

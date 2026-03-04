@@ -9,7 +9,7 @@
 import { ref, onMounted, onUnmounted } from 'vue'
 import gsap from 'gsap'
 
-const isPointer = window.matchMedia('(hover: hover)').matches
+const isPointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches
 const dotEl    = ref(null)
 const canvasEl = ref(null)
 
