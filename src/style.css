@@ -392,12 +392,17 @@ em { font-style: italic; }
   margin-inline: auto;
   padding-inline: clamp(20px,5vw,60px);
   padding-block: clamp(60px,8vh,120px);
-  display: grid;
-  grid-template-columns: 1fr;
+  display: flex;
   align-items: center;
-  gap: 60px;
+  min-height: calc(100svh - var(--nav-h));
   width: 100%;
   position: relative; z-index: 1;
+}
+
+.hero__content {
+  min-width: 0;
+  position: relative;
+  z-index: 3;
 }
 
 .hero__eyebrow {
@@ -449,6 +454,56 @@ em { font-style: italic; }
   opacity: 0;
 }
 
+/* Hero Image */
+.hero__image {
+  position: absolute;
+  right: clamp(0px, 2vw, 24px);
+  top: 50%;
+  transform: translateY(-50%);
+  width: min(46%, 640px);
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  z-index: 2;
+  pointer-events: none;
+}
+.hero__image img {
+  width: 100%;
+  max-width: none;
+  height: auto;
+  max-height: 74vh;
+  border-radius: 24px;
+  object-fit: contain;
+  position: relative;
+  z-index: 1;
+  display: block;
+  filter: drop-shadow(0 20px 60px rgba(0, 0, 0, 0.4));
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 78%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 0%, #000 78%, transparent 100%);
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}
+.hero__image-glow {
+  position: absolute;
+  inset: -15%;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at center,
+    rgba(var(--accent-rgb), 0.2) 0%,
+    rgba(var(--accent-2-rgb), 0.08) 40%,
+    transparent 70%
+  );
+  filter: blur(40px);
+  z-index: 0;
+  animation: hero-glow 6s ease-in-out infinite alternate;
+}
+@keyframes hero-glow {
+  0%   { opacity: 0.6; transform: scale(1); }
+  100% { opacity: 1;   transform: scale(1.05); }
+}
+
 /* Scroll hint */
 .hero__scroll-hint {
   position: absolute; bottom: 40px; left: 50%;
@@ -472,7 +527,23 @@ em { font-style: italic; }
 
 @media (max-width: 960px) {
   .hero__container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     text-align: center;
+    gap: 40px;
+  }
+  .hero__image {
+    position: relative;
+    right: auto;
+    top: auto;
+    transform: none;
+    width: 100%;
+    order: -1;
+    justify-content: center;
+  }
+  .hero__image img {
+    max-width: 320px;
   }
   .hero__eyebrow { margin-inline: auto; }
   .hero__sub { margin-inline: auto; }
@@ -488,6 +559,7 @@ em { font-style: italic; }
 @media (max-width: 480px) {
   .hero__title { font-size: clamp(36px, 9vw, 48px); }
   .hero__br { display: block; }
+  .hero__image img { max-width: 260px; border-radius: 18px; }
 }
 
 /* ─── Marquee ───────────────────────────────────────────────── */
@@ -651,7 +723,6 @@ em { font-style: italic; }
 .stat__plus { font-family: var(--font-display); font-size: 22px; font-weight: 700; color: var(--accent-light); }
 .stat__label { font-size: 11px; color: var(--text-muted); margin-top: 4px; display: block; }
 
-.about__content { }
 .about__text { color: var(--text-muted); margin-bottom: 20px; line-height: 1.8; }
 .about__skills { display: flex; flex-wrap: wrap; gap: 8px; margin: 28px 0 36px; }
 

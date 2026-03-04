@@ -14,9 +14,9 @@
         </div>
 
         <h1 class="hero__title">
-          <span class="hero__title-row" ref="t0">Crafting</span>
-          <span class="hero__title-row hero__title-row--accent" ref="t1">Digital</span>
-          <span class="hero__title-row" ref="t2">Experiences.</span>
+          <span class="hero__title-row" ref="t0">Building</span>
+          <span class="hero__title-row hero__title-row--accent" ref="t1">Great</span>
+          <span class="hero__title-row" ref="t2">Products.</span>
         </h1>
 
         <p class="hero__sub" ref="sub">
@@ -34,6 +34,12 @@
           </a>
           <a href="#contact" class="btn btn--ghost magnetic"><span>Let's Talk</span></a>
         </div>
+      </div>
+
+      <!-- Hero Image -->
+      <div class="hero__image" ref="heroImage">
+        <div class="hero__image-glow"></div>
+        <img src="../img/alex.png" alt="Alex Barbulescu" />
       </div>
     </div>
 
@@ -59,6 +65,7 @@ const t2        = ref(null)
 const sub       = ref(null)
 const actions   = ref(null)
 const scrollHint = ref(null)
+const heroImage  = ref(null)
 
 let cleanupMagnetic = null
 
@@ -66,12 +73,14 @@ function runEntrance() {
   const rows = [t0.value, t1.value, t2.value]
   gsap.set(rows, { clipPath: 'inset(0 0 100% 0)' })
   gsap.set([eyebrow.value, sub.value, actions.value, scrollHint.value], { opacity: 0, y: 20 })
+  gsap.set(heroImage.value, { opacity: 0, scale: 0.9, y: 30 })
 
   const tl = gsap.timeline({ defaults: { ease: 'expo.out' } })
   tl.to(eyebrow.value,  { opacity: 1, y: 0, duration: 0.8 }, 0)
   tl.to(rows,           { clipPath: 'inset(0 0 0% 0)', stagger: 0.12, duration: 0.9 }, 0.15)
   tl.to(sub.value,      { opacity: 1, y: 0, duration: 0.8 }, 0.5)
   tl.to(actions.value,  { opacity: 1, y: 0, duration: 0.8 }, 0.65)
+  tl.to(heroImage.value, { opacity: 1, scale: 1, y: 0, duration: 1.2, ease: 'power3.out' }, 0.3)
   tl.to(scrollHint.value, { opacity: 1, duration: 0.8 }, 1.2)
 }
 
