@@ -5,7 +5,7 @@
         <div>
           <span class="section-label" data-animate="fade-up">Career</span>
           <h2 class="section-title" data-animate="fade-up" data-delay="0.1">
-            Work<br /><em>Experience</em>
+            Previous Work<br /><em>Experience</em>
           </h2>
         </div>
       </div>
@@ -17,8 +17,8 @@
         >
           <!-- Date (desktop) -->
           <div class="exp__left">
-            <span class="exp__date">{{ exp.date }}</span>
-            <span class="exp__duration">{{ exp.duration }}</span>
+            <span class="exp__date">{{ formatExpDate(exp.date) }}</span>
+            <span class="exp__duration">{{ formatExpDuration(exp.duration) }}</span>
           </div>
 
           <!-- Connector -->
@@ -28,9 +28,16 @@
           </div>
 
           <!-- Card -->
-          <div class="exp__card" :class="{ 'exp__card--highlight': exp.highlight }">
+          <div
+            class="exp__card"
+            :class="{ 'exp__card--highlight': selectedExpId === exp.id }"
+            role="button"
+            tabindex="0"
+            @click="(e) => onCardActivate(e, exp.id)"
+            @keydown="(e) => onCardKeydown(e, exp.id)"
+          >
             <!-- Mobile date -->
-            <span class="exp__date-mobile">{{ exp.date }} · {{ exp.duration }}</span>
+            <span class="exp__date-mobile">{{ formatExpDate(exp.date) }} · {{ formatExpDuration(exp.duration) }}</span>
             <div class="exp__card-header">
               <div>
                 <span class="exp__company">{{ exp.company }}</span>
@@ -57,6 +64,53 @@ import { setupScrollAnimations, setupExperienceTimeline } from '../composables/u
 
 const sectionEl = ref(null)
 const timeline  = ref(null)
+const selectedExpId = ref(null)
+
+const MONTH_ABBREVIATIONS = Object.freeze({
+  january: 'Jan',
+  february: 'Feb',
+  march: 'Mar',
+  april: 'Apr',
+  may: 'May',
+  june: 'Jun',
+  july: 'Jul',
+  august: 'Aug',
+  september: 'Sep',
+  october: 'Oct',
+  november: 'Nov',
+  december: 'Dec',
+})
+
+function formatExpDate(value) {
+  if (!value) return ''
+  return String(value).replace(
+    /\b(January|February|March|April|May|June|July|August|September|October|November|December)\b/gi,
+    (match) => MONTH_ABBREVIATIONS[match.toLowerCase()] ?? match,
+  )
+}
+
+function formatExpDuration(value) {
+  if (!value) return ''
+  const input = String(value)
+  return input
+    .replace(/\bLess than a year\b/gi, 'Less than a yr')
+    .replace(/\b(\d+)\s+years\b/gi, '$1 yrs')
+    .replace(/\b(\d+)\s+year\b/gi, '$1 yr')
+    .replace(/\b(\d+)\s+months\b/gi, '$1 mos')
+    .replace(/\b(\d+)\s+month\b/gi, '$1 mo')
+}
+
+function onCardActivate(event, expId) {
+  const target = event?.target
+  if (target?.closest?.('a, button, input, textarea, select, label')) return
+  selectedExpId.value = selectedExpId.value === expId ? null : expId
+}
+
+function onCardKeydown(event, expId) {
+  if (event.key !== 'Enter' && event.key !== ' ') return
+  event.preventDefault()
+  onCardActivate(event, expId)
+}
 
 onMounted(() => {
   setupScrollAnimations(sectionEl.value)
