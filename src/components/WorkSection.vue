@@ -47,15 +47,46 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
+import gsap from 'gsap'
 import { projects } from '../data/projects.js'
 import { setupScrollAnimations, setupProjectCards, setupProjectParallax } from '../composables/useGsap.js'
 
 const sectionEl = ref(null)
 const grid      = ref(null)
 
+function setupTilt(gridEl) {
+  const cards = gridEl.querySelectorAll('.project__link')
+  const cleanups = []
+  cards.forEach(card => {
+    function onMove(e) {
+      const rect = card.getBoundingClientRect()
+      const x = (e.clientX - rect.left) / rect.width - 0.5
+      const y = (e.clientY - rect.top) / rect.height - 0.5
+      gsap.to(card, {
+        rotateX: -y * 7,
+        rotateY: x * 7,
+        transformPerspective: 900,
+        ease: 'power2.out',
+        duration: 0.35,
+      })
+    }
+    function onLeave() {
+      gsap.to(card, { rotateX: 0, rotateY: 0, duration: 0.6, ease: 'elastic.out(1, 0.5)' })
+    }
+    card.addEventListener('mousemove', onMove)
+    card.addEventListener('mouseleave', onLeave)
+    cleanups.push(() => {
+      card.removeEventListener('mousemove', onMove)
+      card.removeEventListener('mouseleave', onLeave)
+    })
+  })
+  return () => cleanups.forEach(fn => fn())
+}
+
 onMounted(() => {
   setupScrollAnimations(sectionEl.value)
   setupProjectCards(grid.value)
   setupProjectParallax(grid.value)
+  setupTilt(grid.value)
 })
 </script>

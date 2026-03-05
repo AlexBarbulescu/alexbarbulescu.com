@@ -1,8 +1,12 @@
 <template>
-  <section class="hero" id="hero" ref="heroEl">
+  <section class="hero" id="hero" ref="heroEl" @mousemove="onMouseMove" @mouseleave="onMouseLeave">
     <div class="hero__bg">
       <div class="hero__gradient"></div>
       <div class="hero__grid"></div>
+      <div class="hero__orb hero__orb--1"></div>
+      <div class="hero__orb hero__orb--2"></div>
+      <div class="hero__orb hero__orb--3"></div>
+      <div class="hero__spotlight"></div>
     </div>
 
     <div class="hero__container">
@@ -85,6 +89,18 @@ function runEntrance() {
 }
 
 watch(() => props.ready, (val) => { if (val) runEntrance() })
+
+function onMouseMove(e) {
+  const rect = heroEl.value.getBoundingClientRect()
+  const x = ((e.clientX - rect.left) / rect.width) * 100
+  const y = ((e.clientY - rect.top) / rect.height) * 100
+  heroEl.value.style.setProperty('--mx', `${x}%`)
+  heroEl.value.style.setProperty('--my', `${y}%`)
+}
+function onMouseLeave() {
+  heroEl.value.style.setProperty('--mx', '65%')
+  heroEl.value.style.setProperty('--my', '45%')
+}
 
 onMounted(() => {
   cleanupMagnetic = setupMagnetic(heroEl.value)

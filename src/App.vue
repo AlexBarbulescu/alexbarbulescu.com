@@ -1,5 +1,6 @@
 <template>
   <div>
+    <div class="grain-overlay" aria-hidden="true"></div>
     <AppCursor />
     <AppLoader @done="heroReady = true" />
     <AppNav />
