@@ -33,8 +33,8 @@
             <span class="exp__date-mobile">{{ exp.date }} · {{ exp.duration }}</span>
             <div class="exp__card-header">
               <div>
-                <h3 class="exp__role">{{ exp.role }}</h3>
                 <span class="exp__company">{{ exp.company }}</span>
+                <h3 class="exp__role">{{ exp.role }}</h3>
               </div>
               <div class="exp__tags">
                 <span v-for="tag in exp.tags" :key="tag" class="tag">{{ tag }}</span>

@@ -979,7 +979,8 @@ em { font-style: italic; }
   margin-bottom: 14px;
   flex-wrap: wrap;
 }
-.exp__role {
+.exp__company {
+  display: block;
   font-family: var(--font-display);
   font-size: clamp(15px, 1.5vw, 18px);
   font-weight: 700;
@@ -987,10 +988,13 @@ em { font-style: italic; }
   color: var(--text);
   margin-bottom: 4px;
 }
-.exp__company {
+.exp__role {
+  font-family: inherit;
   font-size: 13px;
   font-weight: 500;
+  letter-spacing: normal;
   color: var(--accent-light);
+  margin: 0;
 }
 .exp__tags {
   display: flex;
