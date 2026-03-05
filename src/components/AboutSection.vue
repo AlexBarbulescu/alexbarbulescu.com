@@ -63,7 +63,7 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
-import aboutPhoto from '../img/alex_suit.png'
+import aboutPhoto from '/work/alex_suit.png'
 import {
   setupScrollAnimations, setupCounters, setupSkillPills,
   setupAboutReveal, setupMagnetic,

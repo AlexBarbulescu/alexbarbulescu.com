@@ -19,7 +19,7 @@
       <div class="work__grid" ref="grid">
         <article
           v-for="p in projects" :key="p.id"
-          class="project" :class="p.cls"
+          class="project" :class="[p.cls, `project--${p.slug}`]"
         >
           <RouterLink :to="`/work/${p.slug}`" class="project__link">
             <div class="project__image">

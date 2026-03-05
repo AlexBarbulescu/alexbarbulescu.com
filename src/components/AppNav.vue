@@ -43,6 +43,7 @@ const open    = ref(false)
 
 const links = [
   { to: { path: '/', hash: '#work' },       label: 'Work' },
+  { to: '/design-system',                  label: 'System' },
   { to: { path: '/', hash: '#about' },      label: 'About' },
   { to: { path: '/', hash: '#experience' }, label: 'Experience' },
   { to: { path: '/', hash: '#process' },    label: 'Process' },

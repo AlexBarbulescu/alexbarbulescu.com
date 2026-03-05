@@ -43,7 +43,7 @@
       <!-- Hero Image -->
       <div class="hero__image" ref="heroImage">
         <div class="hero__image-glow"></div>
-        <img src="../img/alex.png" alt="Alex Barbulescu" />
+        <img src="/work/alex.png" alt="Alex Barbulescu" />
       </div>
     </div>
 
@@ -55,7 +55,7 @@
 </template>
 
 <script setup>
-import { ref, watch, onMounted, onUnmounted } from 'vue'
+import { ref, watch, onMounted, onUnmounted, nextTick } from 'vue'
 import gsap from 'gsap'
 import { setupMagnetic } from '../composables/useGsap.js'
 
@@ -74,6 +74,8 @@ const heroImage  = ref(null)
 let cleanupMagnetic = null
 
 function runEntrance() {
+  if (!heroEl.value || !eyebrow.value || !t0.value || !t1.value || !t2.value || !sub.value || !actions.value || !scrollHint.value || !heroImage.value) return
+
   const rows = [t0.value, t1.value, t2.value]
   gsap.set(rows, { clipPath: 'inset(0 0 100% 0)' })
   gsap.set([eyebrow.value, sub.value, actions.value, scrollHint.value], { opacity: 0, y: 20 })
@@ -88,7 +90,9 @@ function runEntrance() {
   tl.to(scrollHint.value, { opacity: 1, duration: 0.8 }, 1.2)
 }
 
-watch(() => props.ready, (val) => { if (val) runEntrance() })
+watch(() => props.ready, (val) => {
+  if (val) runEntrance()
+})
 
 function onMouseMove(e) {
   const rect = heroEl.value.getBoundingClientRect()
@@ -104,6 +108,12 @@ function onMouseLeave() {
 
 onMounted(() => {
   cleanupMagnetic = setupMagnetic(heroEl.value)
+
+  // When returning from another route, `ready` is often already true.
+  // Run the intro after mount so refs are guaranteed to exist.
+  if (props.ready) {
+    nextTick(() => runEntrance())
+  }
 })
 onUnmounted(() => {
   cleanupMagnetic?.()

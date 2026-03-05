@@ -2,9 +2,9 @@ export const projects = [
   {
     id: 1,
     slug: 'fintech-dashboard-redesign',
-    cls: 'project--large',
+    cls: 'project--large project--ratio-16x9',
     src: '/work/fintech-dashboard.jpg',
-    alt: 'Fintech Dashboard',
+    alt: 'SolidProof.io FutureVisions Deutschland UG (hbs.)',
     gallery: [
       { src: '/work/fintech-dashboard.jpg', alt: 'Fintech dashboard overview' },
       { src: '/work/fintech-dashboard-2.jpg', alt: 'Research and planning session' },
@@ -12,7 +12,7 @@ export const projects = [
     ],
     tags: ['UI Design', 'UX Research', 'Fintech'],
     year: '2024',
-    title: 'Fintech Dashboard Redesign',
+    title: 'SolidProof.io FutureVisions Deutschland UG (hbs.)',
     desc: 'Complete overhaul of a banking platform serving 200K+ users — 40% reduction in task completion time.',
     caseStudy: [
       { type: 'p', text: 'Replace this placeholder case study with your real project story. The layout matches the article pages and keeps your site’s typography + dark aesthetic.' },
