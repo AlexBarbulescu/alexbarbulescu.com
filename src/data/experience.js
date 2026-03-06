@@ -7,6 +7,7 @@ export const experience = [
     highlight: false,
     role: 'UI/UX and Advertising Designer',
     company: 'FutureVisions Deutschland UG (hbs.)',
+    logo: '',
     tags: ['UI/UX', 'Advertising', 'Web3'],
     items: [
       'Fintech Product Design: Led the UI/UX lifecycle for internal audit management systems, improving the efficiency of smart contract security reporting.',
@@ -23,6 +24,7 @@ export const experience = [
     highlight: false,
     role: 'UI/UX and Advertising Designer',
     company: 'Amplifi',
+    logo: '',
     tags: ['UI/UX', 'Advertising', 'Product'],
     items: [
       'End-to-End Product Design: Owned the UI/UX lifecycle for the core application, transforming complex user flows into intuitive, high-fidelity interfaces using Figma.',
@@ -38,6 +40,7 @@ export const experience = [
     highlight: false,
     role: 'Strategic Branding & Advertising Designer',
     company: 'Cryptic',
+    logo: '',
     tags: ['Branding', 'Advertising', 'Web3'],
     items: [
       'Strategic Branding & UI/UX: Led the visual transformation and UI/UX optimization for high-profile blockchain projects, ensuring brand consistency across decentralized ecosystems.',
@@ -53,6 +56,7 @@ export const experience = [
     highlight: false,
     role: 'UI/UX, Frontend Developer and Advertising Designer',
     company: 'Leonicorn Swap',
+    logo: '',
     tags: ['UI/UX', 'Frontend', 'Web3'],
     items: [
       'Full-Cycle Product Design: Spearheaded the end-to-end UI/UX for core DeFi and GameFi products, including the DICE and DEN platforms, while architecting upcoming interfaces for Lottery, Prediction markets, and NFT marketplaces.',
@@ -68,6 +72,7 @@ export const experience = [
     highlight: false,
     role: 'Advertising Graphic Designer',
     company: '@MustacheTommy',
+    logo: '',
     tags: ['Advertising', 'Crypto', 'Branding'],
     items: [
       'High-Volume Creative Production: Conceptualized and executed over 1,000+ custom digital banners for major cryptocurrency ecosystems including BTC, BNB, TRX, DGB, and WINk.',
@@ -84,6 +89,7 @@ export const experience = [
     highlight: false,
     role: 'Freelance Designer',
     company: 'Freelance',
+    logo: '',
     tags: ['UI/UX', 'Graphic', 'Frontend'],
     items: [
       'Portfolio website: <a href="https://drive.google.com/drive/folders/1CajxKVuuADep6S7mIyDjs-U2mj-xHOMb" target="_blank" rel="noopener">Google Drive folder</a>',
@@ -101,6 +107,7 @@ export const experience = [
     highlight: false,
     role: 'Graphic Designer',
     company: 'XMANNA Software Technologies',
+    logo: '',
     tags: ['Graphic', 'Marketing', 'Game Dev'],
     items: [
       'Social Media Marketing: Designed high-conversion advertising banners and visual assets for various social media platforms.',
@@ -117,6 +124,7 @@ export const experience = [
     highlight: false,
     role: 'Graphic Designer, Social Banners',
     company: 'transmute.fi',
+    logo: '',
     tags: ['Graphic', 'Web3', 'Social'],
     items: [
       'Transmute is trustless on-chain alchemy over Ethereum.',
@@ -131,6 +139,7 @@ export const experience = [
     highlight: false,
     role: 'Unity Asset Store Publisher',
     company: 'Unity',
+    logo: '',
     tags: ['Unity', '3D Assets', 'Publishing'],
     items: [
       'Self-published 4 commercial asset packs on the Unity Asset Store, accumulating 1,500+ combined favorites and a 5-star rating — generating passive income over 6 years.',
@@ -148,6 +157,7 @@ export const experience = [
     highlight: false,
     role: 'Graphic Designer',
     company: 'Infravision Games',
+    logo: '',
     tags: ['3D Modeling', 'Unity', 'Texturing'],
     items: [
       'Assignments:',
@@ -164,6 +174,7 @@ export const experience = [
     highlight: false,
     role: 'Graphic Designer and Frontend Developer',
     company: 'MigrantCoin Ltd.',
+    logo: '',
     tags: ['Graphic', 'Frontend'],
     items: [],
   },
@@ -175,6 +186,7 @@ export const experience = [
     highlight: false,
     role: 'Graphic Designer',
     company: 'MigrantCoin',
+    logo: '',
     tags: ['Graphic'],
     items: [],
   },
@@ -186,6 +198,7 @@ export const experience = [
     highlight: false,
     role: 'Administrator',
     company: 'Unity Developer Hub - Discord Admin',
+    logo: '',
     tags: ['Community', 'Administration'],
     items: [],
   },

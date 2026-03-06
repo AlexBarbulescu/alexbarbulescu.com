@@ -40,7 +40,19 @@
             <span class="exp__date-mobile">{{ formatExpDate(exp.date) }} · {{ formatExpDuration(exp.duration) }}</span>
             <div class="exp__card-header">
               <div>
-                <span class="exp__company">{{ exp.company }}</span>
+                <div class="exp__company-row">
+                  <span class="exp__company-logo" :class="[getCompanyLogoClass(exp), { 'exp__company-logo--image': !!exp.logo }]">
+                    <img
+                      v-if="exp.logo"
+                      :src="exp.logo"
+                      :alt="exp.logoAlt || `${exp.company} logo`"
+                      class="exp__company-logo-img"
+                      loading="lazy"
+                    />
+                    <span v-else class="exp__company-logo-fallback">{{ getCompanyMonogram(exp.company) }}</span>
+                  </span>
+                  <span class="exp__company">{{ exp.company }}</span>
+                </div>
                 <h3 class="exp__role">{{ exp.role }}</h3>
               </div>
               <div class="exp__tags">
@@ -98,6 +110,48 @@ function formatExpDuration(value) {
     .replace(/\b(\d+)\s+year\b/gi, '$1 yr')
     .replace(/\b(\d+)\s+months\b/gi, '$1 mos')
     .replace(/\b(\d+)\s+month\b/gi, '$1 mo')
+}
+
+function getCompanyMonogram(company) {
+  if (!company) return '•'
+
+  const normalized = String(company)
+    .replace(/https?:\/\/|www\./gi, '')
+    .replace(/[^a-z0-9@.\s-]/gi, ' ')
+    .trim()
+
+  const domainLike = normalized.split(/[.\s-]+/).filter(Boolean)
+  if (domainLike.length === 1) {
+    return domainLike[0].slice(0, 2).toUpperCase()
+  }
+
+  const parts = normalized
+    .replace(/^@/, '')
+    .split(/\s+/)
+    .filter(Boolean)
+
+  if (!parts.length) return '•'
+  if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase()
+  return `${parts[0][0] ?? ''}${parts[1][0] ?? ''}`.toUpperCase()
+}
+
+function getCompanyLogoClass(exp) {
+  const company = String(exp?.company || '').toLowerCase()
+
+  if (company.includes('futurevisions')) return 'exp__company-logo--futurevisions'
+  if (company.includes('amplifi')) return 'exp__company-logo--amplifi'
+  if (company.includes('cryptic')) return 'exp__company-logo--cryptic'
+  if (company.includes('leonicorn')) return 'exp__company-logo--leonicorn'
+  if (company.includes('mustachetommy')) return 'exp__company-logo--mustache'
+  if (company.includes('freelance')) return 'exp__company-logo--freelance'
+  if (company.includes('xmanna')) return 'exp__company-logo--xmanna'
+  if (company.includes('transmute')) return 'exp__company-logo--transmute'
+  if (company.includes('unity')) return 'exp__company-logo--unity'
+  if (company.includes('infravision')) return 'exp__company-logo--infravision'
+  if (company.includes('migrantcoin')) return 'exp__company-logo--migrant'
+  if (company.includes('discord')) return 'exp__company-logo--discord'
+
+  return ''
 }
 
 function onCardActivate(event, expId) {
