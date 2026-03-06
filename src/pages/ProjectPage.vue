@@ -53,6 +53,59 @@
             </div>
             <span class="slideshow__count">{{ current + 1 }} / {{ gallery.length }}</span>
           </div>
+
+          <div
+            v-if="banners.length"
+            class="slideshow__banner-layer"
+            aria-label="Project banners"
+            @wheel="onBannerWheel"
+          >
+            <div class="slideshow__banner-header">
+              <span class="slideshow__banner-label">Campaign banners</span>
+            </div>
+
+            <div class="slideshow__banner-window">
+              <div
+                class="slideshow__banner-track"
+                :style="bannerTrackStyle"
+              >
+                <button
+                  v-for="(banner, i) in bannerLoopItems"
+                  :key="banner.loopKey"
+                  class="slideshow__banner-card"
+                  :class="{ active: i === bannerCenterIndex }"
+                  type="button"
+                  :aria-label="`Show banner ${banner.originalIndex + 1}`"
+                  @click="currentBanner = banner.originalIndex"
+                >
+                  <img
+                    class="slideshow__banner-img"
+                    :src="banner.src"
+                    :alt="banner.alt"
+                    loading="lazy"
+                  />
+                </button>
+              </div>
+            </div>
+
+            <div class="slideshow__banner-seek" v-if="banners.length > 1">
+              <div class="slideshow__banner-range-wrap" :style="bannerProgressStyle">
+                <div class="slideshow__banner-range-visual" aria-hidden="true"></div>
+                <input
+                  class="slideshow__banner-range"
+                  type="range"
+                  min="0"
+                  :max="banners.length - 1"
+                  step="1"
+                  :value="currentBanner"
+                  aria-label="Choose campaign banner"
+                  @input="onBannerSeek"
+                  @change="onBannerSeek"
+                />
+              </div>
+              <span class="slideshow__banner-count">{{ currentBanner + 1 }} / {{ banners.length }}</span>
+            </div>
+          </div>
         </div>
 
         <article class="article__content">
@@ -87,7 +140,7 @@
 </template>
 
 <script setup>
-import { computed, ref, watch } from 'vue'
+import { computed, onMounted, onUnmounted, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import { getProjectBySlug } from '../data/projects.js'
 
@@ -96,6 +149,10 @@ const project = computed(() => getProjectBySlug(String(route.params.slug || ''))
 const blocks = computed(() => project.value?.caseStudy || [])
 
 const current = ref(0)
+const currentBanner = ref(0)
+let bannerTimer = null
+let bannerWheelUnlockTimer = null
+let bannerWheelLocked = false
 
 const gallery = computed(() => {
   const p = project.value
@@ -103,6 +160,38 @@ const gallery = computed(() => {
   if (Array.isArray(p.gallery) && p.gallery.length) return p.gallery
   if (p.src) return [{ src: p.src, alt: p.alt || p.title }]
   return []
+})
+
+const banners = computed(() => project.value?.banners || [])
+
+const bannerLoopItems = computed(() => {
+  if (!banners.value.length) return []
+
+  return Array.from({ length: 3 }, (_, copyIndex) =>
+    banners.value.map((banner, bannerIndex) => ({
+      ...banner,
+      originalIndex: bannerIndex,
+      loopKey: `${copyIndex}-${banner.src}-${bannerIndex}`,
+    })),
+  ).flat()
+})
+
+const bannerCenterIndex = computed(() => {
+  if (!banners.value.length) return 0
+  return banners.value.length + currentBanner.value
+})
+
+const bannerTrackStyle = computed(() => ({
+  transform: `translateX(calc(50% - var(--banner-card-center) - ${bannerCenterIndex.value} * var(--banner-track-step)))`,
+}))
+
+const bannerProgressStyle = computed(() => {
+  const totalSteps = Math.max(banners.value.length - 1, 1)
+  const progress = currentBanner.value / totalSteps
+
+  return {
+    '--banner-progress-ratio': progress,
+  }
 })
 
 function prev() {
@@ -115,10 +204,84 @@ function next() {
   current.value = (current.value + 1) % gallery.value.length
 }
 
+function restartBannerAutoplay() {
+  clearBannerAutoplay()
+  if (banners.value.length <= 1) return
+
+  bannerTimer = window.setInterval(() => {
+    currentBanner.value = (currentBanner.value + 1) % banners.value.length
+  }, 2600)
+}
+
+function clearBannerAutoplay() {
+  if (bannerTimer) {
+    window.clearInterval(bannerTimer)
+    bannerTimer = null
+  }
+}
+
+function stepBanner(direction) {
+  if (banners.value.length <= 1) return
+
+  currentBanner.value = (currentBanner.value + direction + banners.value.length) % banners.value.length
+  restartBannerAutoplay()
+}
+
+function onBannerSeek(event) {
+  const nextIndex = Number(event.target.value)
+  if (Number.isNaN(nextIndex)) return
+
+  currentBanner.value = nextIndex
+  restartBannerAutoplay()
+}
+
+function onBannerWheel(event) {
+  if (banners.value.length <= 1) return
+
+  const delta = Math.abs(event.deltaY) > Math.abs(event.deltaX) ? event.deltaY : event.deltaX
+  const direction = Math.sign(delta)
+  if (!direction) return
+
+  event.preventDefault()
+
+  if (bannerWheelLocked) return
+
+  stepBanner(direction)
+  bannerWheelLocked = true
+
+  if (bannerWheelUnlockTimer) {
+    window.clearTimeout(bannerWheelUnlockTimer)
+  }
+
+  bannerWheelUnlockTimer = window.setTimeout(() => {
+    bannerWheelLocked = false
+    bannerWheelUnlockTimer = null
+  }, 180)
+}
+
 watch(
   () => route.params.slug,
   () => {
     current.value = 0
+    currentBanner.value = 0
+    restartBannerAutoplay()
   }
 )
+
+watch(banners, () => {
+  currentBanner.value = 0
+  restartBannerAutoplay()
+})
+
+onMounted(() => {
+  restartBannerAutoplay()
+})
+
+onUnmounted(() => {
+  clearBannerAutoplay()
+  if (bannerWheelUnlockTimer) {
+    window.clearTimeout(bannerWheelUnlockTimer)
+    bannerWheelUnlockTimer = null
+  }
+})
 </script>

@@ -43,7 +43,7 @@
       <!-- Hero Image -->
       <div class="hero__image" ref="heroImage">
         <div class="hero__image-glow"></div>
-        <img src="/work/alex.png" alt="Alex Barbulescu" />
+        <img src="/work/alex_v2.png" alt="Alex Barbulescu" />
       </div>
     </div>
 
