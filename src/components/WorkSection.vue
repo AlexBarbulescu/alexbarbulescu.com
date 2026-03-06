@@ -23,7 +23,9 @@
         >
           <RouterLink :to="`/work/${p.slug}`" class="project__link">
             <div class="project__image">
-              <img :src="p.src" :alt="p.alt" class="project__img" loading="lazy" />
+              <div class="project__media">
+                <img :src="p.src" :alt="p.alt" class="project__img" loading="lazy" />
+              </div>
               <div class="project__overlay">
                 <span class="project__cta">View Case Study →</span>
               </div>
