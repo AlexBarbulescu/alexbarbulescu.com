@@ -43,7 +43,8 @@
       <!-- Hero Image -->
       <div class="hero__image" ref="heroImage">
         <div class="hero__image-glow"></div>
-        <img src="/work/alex_v2.png" alt="Alex Barbulescu" />
+        <img src="/work/alex_v2_back.png" alt="Blurred Background" class="hero__img-back" />
+        <img src="/work/alex_v2_main.png" alt="Alex Barbulescu" class="hero__img-front" />
       </div>
     </div>
 
@@ -72,6 +73,16 @@ const scrollHint = ref(null)
 const heroImage  = ref(null)
 
 let cleanupMagnetic = null
+let resizeTimer = null
+
+function handleResize() {
+  clearTimeout(resizeTimer)
+  resizeTimer = setTimeout(() => {
+    if (heroImage.value) {
+      gsap.set(heroImage.value, { clearProps: 'transform' })
+    }
+  }, 150)
+}
 
 function runEntrance() {
   if (!heroEl.value || !eyebrow.value || !t0.value || !t1.value || !t2.value || !sub.value || !actions.value || !scrollHint.value || !heroImage.value) return
@@ -108,6 +119,7 @@ function onMouseLeave() {
 
 onMounted(() => {
   cleanupMagnetic = setupMagnetic(heroEl.value)
+  window.addEventListener('resize', handleResize)
 
   // When returning from another route, `ready` is often already true.
   // Run the intro after mount so refs are guaranteed to exist.
@@ -117,5 +129,7 @@ onMounted(() => {
 })
 onUnmounted(() => {
   cleanupMagnetic?.()
+  window.removeEventListener('resize', handleResize)
+  clearTimeout(resizeTimer)
 })
 </script>
